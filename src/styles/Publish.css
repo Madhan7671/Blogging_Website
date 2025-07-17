@@ -1,0 +1,61 @@
+.publish-page {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.publish-title {
+  text-align: center;
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 24px;
+}
+
+.publish-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.publish-input,
+.publish-textarea,
+.publish-select {
+  padding: 12px 16px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 1rem;
+  width: 100%;
+  transition: all 0.2s ease-in-out;
+}
+
+.publish-input:focus,
+.publish-textarea:focus,
+.publish-select:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+.publish-textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.publish-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 14px;
+  font-size: 1.1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+
+.publish-button:hover {
+  background-color: #0056b3;
+}
