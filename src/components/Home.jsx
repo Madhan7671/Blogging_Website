@@ -41,11 +41,11 @@ const Home = () => {
     <div className="home">
       <Hero />
       <main className="main-content">
-        <CategoryFilter 
+{/*         <CategoryFilter 
           categories={categories}
           selectedCategory={selectedCategory}
           onCategoryChange={setSelectedCategory}
-        />
+        /> */}
         <div className="blog-grid">
           {filteredPosts.map((post) => (
             <BlogCard 
