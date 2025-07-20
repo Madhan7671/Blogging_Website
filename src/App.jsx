@@ -4,6 +4,7 @@ import {
   Routes,
   Route,
   useLocation,
+  useNavigate,
 } from "react-router-dom";
 import "./styles/App.css";
 
@@ -17,28 +18,50 @@ import PublishForm from "./components/Publish";
 import SignUpForm from "./components/SignUp";
 import SignInForm from "./components/SignIn";
 
+// SignUp component
 const SignUp = ({ onSignUp }) => {
+  const navigate = useNavigate();
+
+  const handleSignUp = () => {
+    onSignUp();
+    navigate("/signin"); // Redirect to SignIn after sign-up
+  };
+
   return (
     <div>
       <SignUpForm />
-      <button onClick={onSignUp}>Sign Up</button>
+      <button onClick={handleSignUp}>Sign Up</button>
     </div>
   );
 };
 
+// SignIn component
 const SignIn = ({ onSignIn }) => {
+  const navigate = useNavigate();
+
+  const handleSignIn = () => {
+    onSignIn();
+    navigate("/"); // Redirect to home after sign-in
+  };
+
   return (
     <div>
       <SignInForm />
-      <button onClick={onSignIn}>Sign In</button>
+      <button onClick={handleSignIn}>Sign In</button>
     </div>
   );
 };
 
+// Main App component
 const App = () => {
   const [isSignedUp, setIsSignedUp] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setIsSignedUp(false);
+  };
 
   return (
     <Router>
@@ -47,17 +70,25 @@ const App = () => {
         isLoggedIn={isLoggedIn}
         onSearch={setSearchTerm}
         searchTerm={searchTerm}
+        onLogout={handleLogout}
       />
       <MainRoutes
         setIsSignedUp={setIsSignedUp}
         setIsLoggedIn={setIsLoggedIn}
+        isLoggedIn={isLoggedIn}
         searchTerm={searchTerm}
       />
     </Router>
   );
 };
 
-const MainRoutes = ({ setIsSignedUp, setIsLoggedIn, searchTerm }) => {
+// Routing component
+const MainRoutes = ({
+  setIsSignedUp,
+  setIsLoggedIn,
+  isLoggedIn,
+  searchTerm,
+}) => {
   const location = useLocation();
 
   return (
@@ -76,9 +107,27 @@ const MainRoutes = ({ setIsSignedUp, setIsLoggedIn, searchTerm }) => {
         />
         <Route
           path="/signin"
-          element={<SignIn onSignIn={() => setIsLoggedIn(true)} />}
+          element={
+            <SignIn
+              onSignIn={() => {
+                setIsLoggedIn(true);
+                setIsSignedUp(true);
+              }}
+            />
+          }
         />
-        <Route path="/publish" element={<PublishForm />} />
+        <Route
+          path="/publish"
+          element={
+            isLoggedIn ? (
+              <PublishForm />
+            ) : (
+              <div style={{ textAlign: "center", marginTop: "2rem" }}>
+                <h2>Please Sign In to access Publish</h2>
+              </div>
+            )
+          }
+        />
       </Routes>
 
       {location.pathname === "/" && <Footer />}
